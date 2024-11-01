@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adservice-deployment
+  name: adservice-deployments
   labels:
     app: adservice
 spec:
