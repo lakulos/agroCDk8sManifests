@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: currencyservice-deployment
+  labels:
+    app: currencyservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: currencyservice
+  template:
+    metadata:
+      labels:
+        app: currencyservice
+    spec:
+      containers:
+      - name: currencyservice
+        image: lakulos/currencyservice:latest
+        env:
+          - name: PORT
+            value: "7000"
+          - name: DISABLE_PROFILER
+            value: "1"
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: currencyservice
+  labels:
+    app: currencyservice
+spec:
+  type: ClusterIP
+  selector:
+    app: currencyservice
+  ports:
+    - port: 7000
+      targetPort: 7000
+    
+
+
